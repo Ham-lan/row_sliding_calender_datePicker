@@ -1,9 +1,18 @@
+import 'package:customized_calender/customized_calender_cubit.dart';
+import 'package:customized_calender/customized_calender_initial_params.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'customized_calender_page.dart';
 
-import 'customizedCalender.dart';
+final getIt = GetIt.instance;
 
-void main() {
-  runApp(const MyApp());
+
+void main() async {
+
+  getIt.registerFactoryParam<customizedCalenderCubit, customizedCalenderInitialParams , dynamic>(
+          (params, _) => customizedCalenderCubit(params)
+  );
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -33,7 +42,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: SafeArea(child: Scaffold(body: HorizontalWeekCalendar())),
+      home: SafeArea(child: Scaffold(body: customizedCalenderPage(cubit: getIt(param1: customizedCalenderInitialParams()),))),
     );
   }
 }
